@@ -1,5 +1,28 @@
 const gridContainer = document.querySelector('#gridContainer');
+let mousedown = false;
 createGrid(10);
+
+const smallButton = document.querySelector('#smallButton');
+smallButton.addEventListener('click', ()=>createGrid(16));
+
+const mediumButton = document.querySelector('#mediumButton');
+mediumButton.addEventListener('click',()=>createGrid(64));
+
+const largeButton = document.querySelector('#largeButton');
+largeButton.addEventListener('click',()=>createGrid(99));
+
+const eraseButton =  document.querySelector('#eraseButton');
+eraseButton.addEventListener('click',()=>setEraseProperty());
+
+const colorMode = document.querySelector('#colorMode');
+colorMode.addEventListener('click',()=>fillColor());
+
+const clearButton = document.querySelector('#clearButton');
+clearButton.addEventListener('click',()=>{
+    clean();
+})
+
+
 
 function createGrid(n){
     gridContainer.innerHTML='';//This will clear the gridContainer initial contents
@@ -24,20 +47,51 @@ for(let i=1;i<=n;i++) //this loop creates n flexboxes(div elements) arranged ver
 }
 fillColor();}
 
-function fillColor(){
+function fillColor(){  //Function for changing the color of the divs
 const drawingPixels = document.querySelectorAll('.pix');
-let mousedown = false;
 
-for(let i=0;i<drawingPixels.length;i++)  //Handling the mouse events to fill the required divs 
-{
+    for(let i=0;i<drawingPixels.length;i++)  //Handling the mouse events to fill the required divs 
+   {
     drawingPixels[i].addEventListener('mouseover',changeColor);
     drawingPixels[i].addEventListener('mousedown',changeMouseDownState);
     drawingPixels[i].addEventListener('mousedown',changeColor);
 
     drawingPixels[i].addEventListener('mouseup',changeMouseUpState);
+   }
 
+   function changeColor(e)
+   {
+    if(e.type==='mouseover'&& !mousedown)
+      return;
+
+     e.target.style.backgroundColor = 'black';
+    }
+   }
+
+function setEraseProperty() //function for erasing the colored divs
+{
+    const drawingPixels = document.querySelectorAll('.pix');
+   
+
+    for(let i=0;i<drawingPixels.length;i++)  //Handling the mouse events to fill the required divs 
+   {
+    drawingPixels[i].addEventListener('mouseover',changeColor);
+    drawingPixels[i].addEventListener('mousedown',changeMouseDownState);
+    drawingPixels[i].addEventListener('mousedown',changeColor);
+
+    drawingPixels[i].addEventListener('mouseup',changeMouseUpState);
+   }
+
+    function changeColor(e)
+   {
+    if(e.type==='mouseover'&& !mousedown)
+      return;
+
+     e.target.style.backgroundColor = 'white';
+   }
 
 }
+
 function changeMouseUpState()
 {
     mousedown = false;
@@ -46,20 +100,12 @@ function changeMouseDownState()
 {
     mousedown = true;
 }
-
-function changeColor(e)
+function clean()
 {
-    if(e.type==='mouseover'&& !mousedown)
-      return;
-
-     e.target.style.backgroundColor = 'black';
+    const drawingPixels = document.querySelectorAll('.pix');
+    for(let i=0;i<drawingPixels.length;i++)
+    {
+        drawingPixels[i].style.backgroundColor = 'white';
+    }
 }
-}
-const smallButton = document.querySelector('#smallButton');
-smallButton.addEventListener('click', ()=>createGrid(16));
 
-const mediumButton = document.querySelector('#mediumButton');
-mediumButton.addEventListener('click',()=>createGrid(64));
-
-const largeButton = document.querySelector('#largeButton');
-largeButton.addEventListener('click',()=>createGrid(99));
