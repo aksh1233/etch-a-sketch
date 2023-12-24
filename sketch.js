@@ -1,10 +1,11 @@
 const gridContainer = document.querySelector('#gridContainer');
-createGrid(90);
-fillColor();
+createGrid(10);
 
 function createGrid(n){
+    gridContainer.innerHTML='';//This will clear the gridContainer initial contents
 for(let i=1;i<=n;i++) //this loop creates n flexboxes(div elements) arranged vertically
 {
+   
     const nthContainer = document.createElement('div');
     for(let j=1;j<=n;j++)// this loop creates n div elements inside each flexbox(div) and also makes the flexbox dynamic by adjusting the height and width of each pixel and the each flexbox
     {
@@ -18,7 +19,10 @@ for(let i=1;i<=n;i++) //this loop creates n flexboxes(div elements) arranged ver
     nthContainer.style.width = '800px';
     nthContainer.style.height = (800/n)+'px';
     gridContainer.appendChild(nthContainer);
-}}
+
+   
+}
+fillColor();}
 
 function fillColor(){
 const drawingPixels = document.querySelectorAll('.pix');
@@ -51,3 +55,11 @@ function changeColor(e)
      e.target.style.backgroundColor = 'black';
 }
 }
+const smallButton = document.querySelector('#smallButton');
+smallButton.addEventListener('click', ()=>createGrid(16));
+
+const mediumButton = document.querySelector('#mediumButton');
+mediumButton.addEventListener('click',()=>createGrid(64));
+
+const largeButton = document.querySelector('#largeButton');
+largeButton.addEventListener('click',()=>createGrid(99));
